@@ -6,19 +6,28 @@ public class SampleMenuModel : Model
     [SerializeField]
     private SampleShopData shopData;
 
+    private GameplayService gameplayService;
+
     #region Properties
 
-    private int _clickCount = 0;
     public int ClickCount
     {
         get
         {
-            return _clickCount;
+            return gameplayService.CurrentNumber;
         }
         set
         {
-            _clickCount = value;
+            gameplayService.CurrentNumber = value;
             Refresh();
+        }
+    }
+
+    public int TargetCount
+    {
+        get
+        {
+            return gameplayService.TargetNumber;
         }
     }
 
@@ -59,6 +68,7 @@ public class SampleMenuModel : Model
 
     private void Awake()
     {
+        gameplayService = new GameplayService(this, shopData);
         shopData.OnShopDataChanged.AddListener(SetIncrementOptions);
     }
 

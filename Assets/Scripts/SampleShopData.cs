@@ -21,5 +21,6 @@ public class SampleShopData : MonoBehaviour
     public void AddMoney(int amount)
     {
         Money += amount;
+        OnShopDataChanged.Invoke();
     }
 }
