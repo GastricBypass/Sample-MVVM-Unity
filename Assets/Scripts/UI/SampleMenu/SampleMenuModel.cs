@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 public class SampleMenuModel : Model
 {
     #region Properties
@@ -30,6 +32,15 @@ public class SampleMenuModel : Model
         }
     }
 
+    private List<int> _incrementOptions = new List<int> { 1, 2 };
+    public List<int> IncremementOptions
+    {
+        get
+        {
+            return _incrementOptions;
+        }
+    }
+
     #endregion
 
     public void IncrementClickCount()
@@ -40,5 +51,11 @@ public class SampleMenuModel : Model
     public void Reset()
     {
         ClickCount = 0;
+    }
+
+    public void AddIncrementOption(int newOption)
+    {
+        IncremementOptions.Add(newOption);
+        Refresh();
     }
 }
