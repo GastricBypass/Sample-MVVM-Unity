@@ -1,7 +1,11 @@
 using System.Collections.Generic;
+using UnityEngine;
 
 public class SampleMenuModel : Model
 {
+    [SerializeField]
+    private SampleShopData shopData;
+
     #region Properties
 
     private int _clickCount = 0;
@@ -32,7 +36,7 @@ public class SampleMenuModel : Model
         }
     }
 
-    private List<int> _incrementOptions = new List<int> { 1, 2 };
+    private List<int> _incrementOptions = new List<int>();
     public List<int> IncremementOptions
     {
         get
@@ -53,9 +57,35 @@ public class SampleMenuModel : Model
         ClickCount = 0;
     }
 
-    public void AddIncrementOption(int newOption)
+    private void Awake()
     {
-        IncremementOptions.Add(newOption);
+        shopData.OnShopDataChanged.AddListener(SetIncrementOptions);
+    }
+
+    private void Start()
+    {
+        SetIncrementOptions();
+    }
+
+    private void SetIncrementOptions()
+    {
+        _incrementOptions.Clear();
+        foreach (var option in shopData.UnlockedOptions)
+        {
+            AddIncrementOption(option.IncrementValue);
+        }
+
         Refresh();
+    }
+
+    private void AddIncrementOption(int newOption)
+    {
+        int i = 0;
+        while (i < IncremementOptions.Count && IncremementOptions[i] < newOption)
+        {
+            i++;
+        }
+
+        IncremementOptions.Insert(i, newOption);
     }
 }
