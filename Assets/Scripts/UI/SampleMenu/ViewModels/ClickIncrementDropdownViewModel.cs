@@ -2,11 +2,14 @@ using System.Collections.Generic;
 
 public class ClickIncrementDropdownViewModel : DropdownViewModel<SampleMenuModel>
 {
+    private int incrementValue;
+
     protected override void OnModelChanged()
     {
         base.OnModelChanged();
 
-        if (Dropdown.options.Count == Model.IncremementOptions.Count)
+        if (Dropdown.options.Count == Model.IncremementOptions.Count &&
+            Model.IncrementAmountPerClick == incrementValue)
         {
             return;
         }
@@ -23,6 +26,7 @@ public class ClickIncrementDropdownViewModel : DropdownViewModel<SampleMenuModel
 
     protected override void OnDropdownChanged(int index)
     {
-        Model.IncrementAmountPerClick = Model.IncremementOptions[index];
+        incrementValue = Model.IncremementOptions[index];
+        Model.IncrementAmountPerClick = incrementValue;
     }
 }

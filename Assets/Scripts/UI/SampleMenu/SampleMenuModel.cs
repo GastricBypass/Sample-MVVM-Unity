@@ -5,10 +5,18 @@ public class SampleMenuModel : Model
 {
     [SerializeField]
     private SampleShopData shopData;
+    [SerializeField]
+    private GameplayVariables gameplayVariables;
+    [SerializeField]
+    private TimeRemainingTextViewModel timeRemaining;
 
     private GameplayService gameplayService;
 
     #region Properties
+
+    public int TargetCount => gameplayService.TargetNumber;
+    public float TimeRemaining => gameplayService.TimeRemaining >= 0 ? gameplayService.TimeRemaining : 0;
+    public int Score => gameplayService.Score;
 
     public int ClickCount
     {
@@ -20,14 +28,6 @@ public class SampleMenuModel : Model
         {
             gameplayService.CurrentNumber = value;
             Refresh();
-        }
-    }
-
-    public int TargetCount
-    {
-        get
-        {
-            return gameplayService.TargetNumber;
         }
     }
 
@@ -54,6 +54,20 @@ public class SampleMenuModel : Model
         }
     }
 
+    private bool _hasLost;
+    public bool HasLost
+    {
+        get
+        {
+            return (_hasLost);
+        }
+        set
+        {
+            _hasLost = value;
+            Refresh();
+        }
+    }
+
     #endregion
 
     public void IncrementClickCount()
@@ -66,15 +80,36 @@ public class SampleMenuModel : Model
         ClickCount = 0;
     }
 
+    public void Restart()
+    {
+        gameplayService = new GameplayService(this, shopData, gameplayVariables);
+        HasLost = false;
+        shopData.Restart();
+        IncrementAmountPerClick = 1;
+    }
+
     private void Awake()
     {
-        gameplayService = new GameplayService(this, shopData);
+        gameplayService = new GameplayService(this, shopData, gameplayVariables);
         shopData.OnShopDataChanged.AddListener(SetIncrementOptions);
     }
 
     private void Start()
     {
         SetIncrementOptions();
+    }
+
+    private void Update()
+    {
+        if (TimeRemaining <= 0)
+        {
+            HasLost = true;
+        }
+        else
+        {
+            gameplayService.TimeElapsed += Time.deltaTime;
+            timeRemaining.Refresh();
+        }
     }
 
     private void SetIncrementOptions()

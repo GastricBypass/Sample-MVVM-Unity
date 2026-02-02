@@ -5,8 +5,6 @@ using UnityEngine.UI;
 public class SampleShopMenuModel : Model
 {
     [SerializeField]
-    private List<ShopOption> allShopOptions = new List<ShopOption>();
-    [SerializeField]
     private ShopOptionButtonViewModel shopOptionPrefab;
     [SerializeField]
     private VerticalLayoutGroup shopListGroup;
@@ -39,15 +37,10 @@ public class SampleShopMenuModel : Model
 
     private void CreateShopOptions()
     {
-        foreach (var option in allShopOptions)
+        foreach (var option in shopData.AllShopOptions)
         {
             var optionGameObject = Instantiate(shopOptionPrefab, shopListGroup.transform);
             optionGameObject.ShopOption = option;
-
-            if (option.IsUnlocked)
-            {
-                shopData.UnlockedOptions.Add(option);
-            }
         }
     }
 }
