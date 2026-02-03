@@ -223,27 +223,18 @@ MonoBehaviour:
   AllShopOptions:
   - IncrementValue: 1
     Cost: 1
-    IsUnlocked: 1
   - IncrementValue: 2
     Cost: 2
-    IsUnlocked: 1
   - IncrementValue: 4
     Cost: 4
-    IsUnlocked: 0
   - IncrementValue: 8
     Cost: 8
-    IsUnlocked: 0
   - IncrementValue: 16
     Cost: 16
-    IsUnlocked: 0
   - IncrementValue: 32
     Cost: 32
-    IsUnlocked: 0
   - IncrementValue: 64
     Cost: 64
-    IsUnlocked: 0
-  Money: 0
-  UnlockedOptions: []
 --- !u!4 &499550396
 Transform:
   m_ObjectHideFlags: 0
