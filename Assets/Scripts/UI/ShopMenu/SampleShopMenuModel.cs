@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -27,6 +26,11 @@ public class SampleShopMenuModel : Model
     public bool CanAffordOption(ShopOption option)
     {
         return shopData.Money >= option.Cost;
+    }
+
+    public bool IsOptionUnlocked(ShopOption option)
+    {
+        return shopData.UnlockedOptions.Contains(option);
     }
 
     private void Awake()

@@ -5,5 +5,4 @@ public class ShopOption
 {
     public int IncrementValue;
     public int Cost;
-    public bool IsUnlocked;
 }

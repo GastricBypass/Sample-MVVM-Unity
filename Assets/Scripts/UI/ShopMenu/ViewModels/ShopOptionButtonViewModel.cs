@@ -11,12 +11,12 @@ public class ShopOptionButtonViewModel : ButtonViewModel<SampleShopMenuModel>
     protected override void OnModelChanged()
     {
         base.OnModelChanged();
-        buttonText.text = ShopOption.IncrementValue + (ShopOption.IsUnlocked ? " (owned)" : string.Empty);
+        buttonText.text = ShopOption.IncrementValue + (Model.IsOptionUnlocked(ShopOption) ? " (owned)" : string.Empty);
     }
 
     protected override bool IsEnabled()
     {
-        return Model.CanAffordOption(ShopOption) && !ShopOption.IsUnlocked;
+        return Model.CanAffordOption(ShopOption) && !Model.IsOptionUnlocked(ShopOption);
     }
 
     protected override void OnClick()

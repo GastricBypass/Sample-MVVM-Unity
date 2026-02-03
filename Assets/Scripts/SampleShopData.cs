@@ -10,8 +10,8 @@ public class SampleShopData : MonoBehaviour
     [SerializeField]
     public List<ShopOption> AllShopOptions = new List<ShopOption>();
 
-    public int Money = 0;
-    public List<ShopOption> UnlockedOptions = new List<ShopOption>();
+    public int Money { get; set; } = 0;
+    public List<ShopOption> UnlockedOptions { get; set; } = new List<ShopOption>();
 
     public UnityEvent OnShopDataChanged { get; set; } = new UnityEvent();
 
@@ -23,7 +23,6 @@ public class SampleShopData : MonoBehaviour
     public void UnlockOption(ShopOption option)
     {
         Money -= option.Cost;
-        option.IsUnlocked = true;
         UnlockedOptions.Add(option);
 
         OnShopDataChanged.Invoke();
@@ -42,6 +41,8 @@ public class SampleShopData : MonoBehaviour
         {
             UnlockedOptions.Add(AllShopOptions[index]);
         }
+
+        Money = 0;
 
         OnShopDataChanged.Invoke();
     }
